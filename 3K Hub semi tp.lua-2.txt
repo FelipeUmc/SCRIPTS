@@ -533,7 +533,7 @@ barScreenGui.Parent = CoreGui  -- Coloca no CoreGui para ficar sempre visível
 -- Container principal da barrinha (bem maior)
 local barContainer = Instance.new("Frame")
 barContainer.Name = "ProgressBarContainer"
-barContainer.Size = UDim2.new(0, 500, 0, 40)  -- MAIOR: 500 de largura, 40 de altura
+barContainer.Size = UDim2.new(0, 250, 0, 20)  -- MAIOR: 500 de largura, 40 de altura
 barContainer.Position = UDim2.new(0.5, -250, 0.4, 0)  -- MEIO DA TELA (50% largura, 40% altura)
 barContainer.AnchorPoint = Vector2.new(0.5, 0.5)  -- Centraliza pelo meio
 barContainer.BackgroundColor3 = Color3.fromRGB(20, 20, 20)  -- Fundo escuro
