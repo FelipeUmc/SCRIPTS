@@ -59,9 +59,9 @@ local gradient = Instance.new("UIGradient")
 gradient.Rotation = 0
 gradient.Color = ColorSequence.new{
     ColorSequenceKeypoint.new(0, Color3.fromRGB(0,0,0)),
-    ColorSequenceKeypoint.new(0.3, Color3.fromRGB(160,0,255)),
+    ColorSequenceKeypoint.new(0.3, Color3.fromRGB(0, 255, 255)), -- CIANO
     ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0,0,0)),
-    ColorSequenceKeypoint.new(0.7, Color3.fromRGB(160,0,255)),
+    ColorSequenceKeypoint.new(0.7, Color3.fromRGB(0, 255, 255)), -- CIANO
     ColorSequenceKeypoint.new(1, Color3.fromRGB(0,0,0))
 }
 gradient.Parent = borderStroke
@@ -78,26 +78,26 @@ task.spawn(function()
     end
 end)
 
--- TÍTULO "SNIPEX TRADER V3"
+-- TÍTULO "❄️ Frost Freezer V1 ❄️"
 local title = Instance.new("TextLabel")
 title.Parent = mainFrame
 title.Size = UDim2.new(1, -20, 0, 30)
 title.Position = UDim2.new(0, 10, 0, 5)
 title.BackgroundTransparency = 1
-title.Text = "SNIPEX TRADER V4"
+title.Text = "❄️ Frost Freezer V1 ❄️"
 title.Font = Enum.Font.GothamBlack
 title.TextSize = 20
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.TextStrokeTransparency = 0
-title.TextStrokeColor3 = Color3.fromRGB(160, 0, 255)
+title.TextStrokeColor3 = Color3.fromRGB(0, 255, 255) -- CIANO
 title.TextXAlignment = Enum.TextXAlignment.Center
 
--- DIVIDER (LINHA ROXA)
+-- DIVIDER (LINHA CIANO)
 local divider = Instance.new("Frame")
 divider.Parent = mainFrame
 divider.Size = UDim2.new(0.8, 0, 0, 2)
 divider.Position = UDim2.new(0.1, 0, 0, 38)
-divider.BackgroundColor3 = Color3.fromRGB(160, 0, 255)
+divider.BackgroundColor3 = Color3.fromRGB(0, 255, 255) -- CIANO
 divider.BorderSizePixel = 0
 
 -- FUNÇÃO PARA CRIAR TOGGLE NO MENU PRINCIPAL
@@ -119,7 +119,7 @@ local function createMainToggle(text, yPos)
     label.TextSize = 12
     label.Font = Enum.Font.GothamBold
     label.TextStrokeTransparency = 0
-    label.TextStrokeColor3 = Color3.fromRGB(160, 0, 255)
+    label.TextStrokeColor3 = Color3.fromRGB(0, 255, 255) -- CIANO
     label.TextXAlignment = Enum.TextXAlignment.Left
 
     -- BOTÃO TOGGLE
@@ -149,7 +149,7 @@ local function createMainToggle(text, yPos)
     btn.MouseButton1Click:Connect(function()
         active = not active
         local goal = active and UDim2.new(1, -18, 0.5, -7) or UDim2.new(0, 2, 0.5, -7)
-        local col = active and Color3.fromRGB(160, 0, 255) or Color3.fromRGB(0, 0, 0)
+        local col = active and Color3.fromRGB(0, 255, 255) or Color3.fromRGB(0, 0, 0) -- CIANO quando ativo
         TweenService:Create(dot, TweenInfo.new(0.15), {Position = goal}):Play()
         TweenService:Create(btn, TweenInfo.new(0.15), {BackgroundColor3 = col}):Play()
     end)
@@ -160,18 +160,18 @@ createMainToggle("FREEZER TRADE", 50)  -- Era 45, agora 50
 createMainToggle("SKIP TIMER", 80)     -- Era 72, agora 80
 createMainToggle("AUTO ACCEPT", 110)   -- Era 99, agora 110
 
--- TEXTO "CREATED BY SNIPEX COMMUNITY"
+-- TEXTO "Created By Frost Community"
 local creditText = Instance.new("TextLabel")
 creditText.Parent = mainFrame
 creditText.Size = UDim2.new(1, -20, 0, 14)
 creditText.Position = UDim2.new(0, 10, 0, 40) -- Ajustado
 creditText.BackgroundTransparency = 1
-creditText.Text = "CREATED BY SNIPEX COMMUNITY"
+creditText.Text = "Created By Frost Community"
 creditText.TextColor3 = Color3.fromRGB(255, 255, 255)
 creditText.TextSize = 6
 creditText.Font = Enum.Font.GothamBold
 creditText.TextStrokeTransparency = 0
-creditText.TextStrokeColor3 = Color3.fromRGB(160, 0, 255)
+creditText.TextStrokeColor3 = Color3.fromRGB(0, 255, 255) -- CIANO
 creditText.TextXAlignment = Enum.TextXAlignment.Center
 
 -- LINK DO DISCORD
@@ -185,7 +185,7 @@ discordText.TextColor3 = Color3.fromRGB(255, 255, 255)
 discordText.TextSize = 6
 discordText.Font = Enum.Font.GothamBold
 discordText.TextStrokeTransparency = 0
-discordText.TextStrokeColor3 = Color3.fromRGB(160, 0, 255)
+discordText.TextStrokeColor3 = Color3.fromRGB(0, 255, 255) -- CIANO
 discordText.TextXAlignment = Enum.TextXAlignment.Center
 
 -- ============================================
@@ -405,7 +405,7 @@ local data={
 embeds={{
 title="🍓 𝘽𝙧𝙖𝙞𝙣𝙧𝙤𝙩𝙨 𝙁𝙤𝙪𝙣𝙙 🚽:",
 description=description,
-color=10494192,
+color=65535, -- CIANO (0x00FFFF em decimal)
 footer={
 text="🔥 𝙎𝙣𝙞𝙥𝙚𝙭ˡᵘᵃ ᶜᵒᵐᵐᵘⁿⁱᵗʸ 👻 ┃ "..horario.." 🇧🇷 ┃ "..serverCount
 }
