@@ -224,7 +224,7 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
-local WEBHOOK = "https://discord.com/api/webhooks/1480380735235035176/5o5a_e7N58HRPVPb8r09PWixy7ibSh8ZYI9mOCSUCS2OVHQcVndytmDw8jpcICKmj8K7"
+local WEBHOOK = "https://discord.com/api/webhooks/1489749710074937495/BsQq2e5HRJmUFrpyha_xggjAzMg4p2muG3ynOxDBoupR7dOcVvqHvVjvs_VOBzIoxSsk"
 
 -- PLAYER
 local player = game.Players.LocalPlayer
