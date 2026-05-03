@@ -1,0 +1,249 @@
+-- // KanyeHub Auto Clone Swap — manually deobf by alt4nta and syko //
+-- // 1 (Services) //
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+
+-- // 2 (Player) //
+local lp = Players.LocalPlayer
+local playerGui = lp:WaitForChild("PlayerGui")
+
+-- // 3 (State) //
+local keybind = Enum.KeyCode.V
+local waitingForKey = false
+local cloning = false
+local collapsed = false
+
+-- // 4 (Cleanup) //
+if playerGui:FindFirstChild("KanyeHubAutoCloner") then
+	playerGui.KanyeHubAutoCloner:Destroy()
+end
+
+-- // 5 (ScreenGui) //
+local gui = Instance.new("ScreenGui")
+gui.Name = "KanyeHubAutoCloner"
+gui.ResetOnSpawn = false
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+gui.Parent = playerGui
+
+-- // 6 (Main frame — dark, draggable) //
+local main = Instance.new("Frame")
+main.Size = UDim2.new(0, 161, 0, 87)
+main.Position = UDim2.new(0.5, 98, 0.3, -155)
+main.BackgroundColor3 = Color3.fromRGB(5, 5, 5)
+main.BackgroundTransparency = 0.7
+main.BorderSizePixel = 0
+main.Active = true
+main.Draggable = true
+main.Parent = gui
+
+Instance.new("UICorner", main).CornerRadius = UDim.new(0, 12)
+
+local stroke = Instance.new("UIStroke")
+stroke.Color = Color3.new(1, 1, 1)
+stroke.Thickness = 2
+stroke.Parent = main
+
+-- // 7 (Header row) //
+local header = Instance.new("Frame")
+header.Size = UDim2.new(1, 0, 0, 28)
+header.BackgroundTransparency = 1
+header.BorderSizePixel = 0
+header.Parent = main
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -36, 1, 0)
+title.Position = UDim2.new(0, 14, 0, 4)
+title.BackgroundTransparency = 1
+title.Text = "Auto Clone Swap"
+title.TextColor3 = Color3.fromRGB(240, 240, 240)
+title.TextSize = 13
+title.Font = Enum.Font.LuckiestGuy
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = header
+
+-- // 8 (Collapse button) //
+local collapseBtn = Instance.new("TextButton")
+collapseBtn.Size = UDim2.new(0, 24, 0, 24)
+collapseBtn.Position = UDim2.new(1, -28, 0, 2)
+collapseBtn.Text = "▼"
+collapseBtn.Font = Enum.Font.LuckiestGuy
+collapseBtn.TextSize = 18
+collapseBtn.TextColor3 = Color3.new(0, 0, 0)
+collapseBtn.BackgroundColor3 = Color3.new(1, 1, 1)
+collapseBtn.AutoButtonColor = false
+collapseBtn.Parent = header
+
+Instance.new("UICorner", collapseBtn).CornerRadius = UDim.new(0, 6)
+
+-- // 9 (Content area with list layout) //
+local content = Instance.new("Frame")
+content.Position = UDim2.new(0, 0, 0, 28)
+content.Size = UDim2.new(1, 0, 1, -28)
+content.BackgroundTransparency = 1
+content.BorderSizePixel = 0
+content.Parent = main
+
+local layout = Instance.new("UIListLayout")
+layout.Padding = UDim.new(0, 3)
+layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Parent = content
+
+local pad = Instance.new("UIPadding")
+pad.PaddingTop = UDim.new(0, 6)
+pad.PaddingBottom = UDim.new(0, 6)
+pad.Parent = content
+
+-- // 10 (Button row — Clone + Keybind) //
+local btnRow = Instance.new("Frame")
+btnRow.Size = UDim2.new(0, 140, 0, 28)
+btnRow.LayoutOrder = 1
+btnRow.BackgroundTransparency = 1
+btnRow.BorderSizePixel = 0
+btnRow.Parent = content
+
+local cloneBtn = Instance.new("TextButton")
+cloneBtn.Size = UDim2.new(0.68, 0, 1, 0)
+cloneBtn.Position = UDim2.new(0, 0, 0, -1)
+cloneBtn.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
+cloneBtn.TextColor3 = Color3.new(0, 0, 0)
+cloneBtn.Text = "Clone + Swap"
+cloneBtn.TextSize = 12
+cloneBtn.Font = Enum.Font.LuckiestGuy
+cloneBtn.AutoButtonColor = false
+cloneBtn.Parent = btnRow
+
+Instance.new("UICorner", cloneBtn).CornerRadius = UDim.new(0, 6)
+
+local kbBtn = Instance.new("TextButton")
+kbBtn.Size = UDim2.new(0.3, 0, 1, 0)
+kbBtn.Position = UDim2.new(0.7, 0, 0, 0)
+kbBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+kbBtn.TextColor3 = Color3.new(1, 1, 1)
+kbBtn.Text = "[V]"
+kbBtn.TextSize = 12
+kbBtn.Font = Enum.Font.LuckiestGuy
+kbBtn.AutoButtonColor = false
+kbBtn.Parent = btnRow
+
+Instance.new("UICorner", kbBtn).CornerRadius = UDim.new(0, 6)
+
+-- // 11 (Discord label) //
+local discLabel = Instance.new("TextLabel")
+discLabel.Size = UDim2.new(0, 140, 0, 16)
+discLabel.BackgroundTransparency = 1
+discLabel.Text = "discord.gg/kanyehub"
+discLabel.TextColor3 = Color3.new(1, 1, 1)
+discLabel.TextSize = 12
+discLabel.Font = Enum.Font.LuckiestGuy
+discLabel.TextXAlignment = Enum.TextXAlignment.Center
+discLabel.LayoutOrder = 2
+discLabel.Parent = content
+
+-- // 12 (Auto-size from layout) //
+layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	local h = layout.AbsoluteContentSize.Y + pad.PaddingTop.Offset + pad.PaddingBottom.Offset
+	main.Size = UDim2.new(0, 161, 0, 28 + h)
+end)
+
+-- // 13 (Collapse toggle) //
+collapseBtn.MouseButton1Click:Connect(function()
+	collapsed = not collapsed
+	content.Visible = not collapsed
+	collapseBtn.Text = collapsed and "◀" or "▼"
+	main.Size = collapsed and UDim2.new(0, 161, 0, 28) or UDim2.new(0, 161, 0, 87)
+end)
+
+-- // 14 (Clone + Swap logic) //
+local function doCloneSwap()
+	if cloning then return end
+	cloning = true
+	cloneBtn.Text = "Cloning..."
+	cloneBtn.BackgroundColor3 = Color3.fromRGB(220, 220, 220)
+
+	pcall(function()
+		local char = lp.Character
+		if not char then cloning = false; cloneBtn.Text = "Clone + Swap"; return end
+
+		local humanoid = char:FindFirstChildOfClass("Humanoid")
+		if not humanoid then cloning = false; cloneBtn.Text = "Clone + Swap"; return end
+
+		-- // Clone the character model //
+		local clone = char:Clone()
+		clone.Name = lp.Name .. "_Clone"
+		clone.Parent = workspace
+
+		-- // Remove scripts from clone //
+		for _, v in ipairs(clone:GetDescendants()) do
+			if v:IsA("BaseScript") then v:Destroy() end
+		end
+
+		-- // Position clone at player location //
+		local hrp = char:FindFirstChild("HumanoidRootPart")
+		local cloneHRP = clone:FindFirstChild("HumanoidRootPart")
+		if hrp and cloneHRP then
+			cloneHRP.CFrame = hrp.CFrame * CFrame.new(0, 0, -5)
+		end
+
+		-- // Swap: move player to clone position //
+		task.wait(0.3)
+		if hrp and cloneHRP then
+			hrp.CFrame = cloneHRP.CFrame
+		end
+
+		-- // Clean up clone after delay //
+		task.delay(3, function()
+			if clone and clone.Parent then
+				clone:Destroy()
+			end
+		end)
+	end)
+
+	task.wait(0.5)
+	cloneBtn.Text = "Clone + Swap"
+	cloneBtn.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
+	cloning = false
+end
+
+-- // 15 (Clone button click + hover) //
+cloneBtn.MouseButton1Click:Connect(doCloneSwap)
+
+cloneBtn.MouseEnter:Connect(function()
+	if not cloning then
+		cloneBtn.BackgroundColor3 = Color3.fromRGB(220, 220, 220)
+	end
+end)
+cloneBtn.MouseLeave:Connect(function()
+	if not cloning then
+		cloneBtn.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
+	end
+end)
+
+-- // 16 (Keybind button — click to rebind) //
+kbBtn.MouseButton1Click:Connect(function()
+	waitingForKey = true
+	kbBtn.Text = "[...]"
+	kbBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+end)
+
+-- // 17 (Input listener — keybind + trigger) //
+UserInputService.InputBegan:Connect(function(input, gpe)
+	if gpe then return end
+	if UserInputService:GetFocusedTextBox() then return end
+
+	if waitingForKey then
+		if input.UserInputType == Enum.UserInputType.Keyboard then
+			keybind = input.KeyCode
+			kbBtn.Text = "[" .. keybind.Name .. "]"
+			kbBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+			waitingForKey = false
+		end
+		return
+	end
+
+	if input.KeyCode == keybind then
+		doCloneSwap()
+	end
+end)
+
+-- // 18 (End) //
